@@ -44,5 +44,13 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
+# VS Code files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
 # Output folder
 build
