@@ -1,0 +1,1 @@
+add_executable(ABRUHP main.cpp common/token.cpp lexer/lexer.cpp)
