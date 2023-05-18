@@ -1,55 +1,64 @@
 #pragma once
 
-#include <string>
 #include <ostream>
+#include <string>
+#include <unordered_map>
 
-namespace ABRUHP
-{
-    enum class TokenType
-    {
-        TOKEN_PROGRAM_TYPE,
+namespace ABRUHP {
+enum class TokenType {
+  TOKEN_PROGRAM_TYPE,
 
-        // Format tokens
-        TOKEN_NEW_LINE,
-        TOKEN_INDENTATION,
+  // Format tokens
+  TOKEN_NEW_LINE,
+  TOKEN_INDENTATION,
 
-        // Report specific tokens
-        TOKEN_REPORT,
-        TOKEN_NAME,
+  // Report specific tokens
+  TOKEN_REPORT,
+  TOKEN_NAME,
 
-        // Basic types
-        TOKEN_STRING,
-        TOKEN_INTEGER,
+  // Basic types
+  TOKEN_STRING,
+  TOKEN_INTEGER,
 
-        // ()
-        TOKEN_LEFT_PARENTHESIS,
-        TOKEN_RIGHT_PARENTHESIS,
+  // ()
+  TOKEN_LEFT_PARENTHESIS,
+  TOKEN_RIGHT_PARENTHESIS,
 
-        // :
-        TOKEN_COLON,
+  // :
+  TOKEN_COLON,
 
-        // Standard functions
-        TOKEN_PRINT,
-        TOKEN_SKIP,
-        TOKEN_LINE,
+  // Identifier
+  TOKEN_IDENTIFIER,
 
-        // Comment
-        TOKEN_COMMENT,
+  // Standard functions
+  TOKEN_PRINT,
+  TOKEN_SKIP,
+  TOKEN_LINE,
 
-        TOKEN_EOF,
-    };
+  // Comment
+  TOKEN_COMMENT,
 
-    class Token
-    {
-        TokenType type;
-        std::string value;
+  TOKEN_EOF,
+};
 
-    public:
-        Token(TokenType type);
-        Token(TokenType type, std::string value);
+std::unordered_map<std::string, TokenType> keywords = {
+    {"program", TokenType::TOKEN_PROGRAM_TYPE},
+    {"report", TokenType::TOKEN_REPORT},
+    {"name", TokenType::TOKEN_NAME},
+    {"print", TokenType::TOKEN_PRINT},
+    {"skip", TokenType::TOKEN_SKIP},
+    {"line", TokenType::TOKEN_LINE}};
 
-        std::string toString();
-    };
-}
+class Token {
+  TokenType type;
+  std::string value;
 
-std::ostream& operator<<(std::ostream& os, ABRUHP::Token& tk);
+public:
+  Token(TokenType type);
+  Token(TokenType type, std::string value);
+
+  std::string toString();
+};
+} // namespace ABRUHP
+
+std::ostream &operator<<(std::ostream &os, ABRUHP::Token &tk);

@@ -5,26 +5,28 @@
 
 #include "../common/token.hpp"
 
-namespace ABRUHP
-{
-    class Lexer
-    {
-        std::string source;
-        std::vector<Token> tokens;
-        size_t current = 0;
+namespace ABRUHP {
+class Lexer {
+  std::string source;
+  std::vector<Token> tokens;
+  size_t current = 0;
 
-        void addToken(TokenType type);
-        void addToken(TokenType type, std::string value);
-        char advance();
-        void analyze();
-        bool atEnd();
-        char getCurrent();
+  void addToken(TokenType type);
+  void addToken(TokenType type, std::string value);
+  char advance();
+  void analyze();
+  bool atEnd();
+  char getCurrent();
+  void handleIdentifier();
+  bool isAlpha(char control);
+  bool isAlphaNumeric(char control);
+  bool isNumeric(char control);
+  char peek();
 
-    public:
-        Lexer(std::string source);
+public:
+  Lexer(std::string source);
 
-        std::vector<Token> getTokens();
+  std::vector<Token> getTokens();
+};
 
-    };
-
-}
+} // namespace ABRUHP
