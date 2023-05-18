@@ -17,7 +17,9 @@ class Lexer {
   void analyze();
   bool atEnd();
   char getCurrent();
+  void handleComment();
   void handleIdentifier();
+  void handleNumber();
   bool isAlpha(char control);
   bool isAlphaNumeric(char control);
   bool isNumeric(char control);

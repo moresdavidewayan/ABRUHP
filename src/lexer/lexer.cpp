@@ -24,6 +24,21 @@ void Lexer::analyze() {
     case '\n':
       addToken(TokenType::TOKEN_NEW_LINE);
       break;
+    case '\t':
+      addToken(TokenType::TOKEN_INDENTATION);
+      break;
+    case '(':
+      addToken(TokenType::TOKEN_LEFT_PARENTHESIS);
+      break;
+    case ')':
+      addToken(TokenType::TOKEN_RIGHT_PARENTHESIS);
+      break;
+    case ':':
+      addToken(TokenType::TOKEN_COLON);
+      break;
+    case '#':
+      handleComment();
+      break;
     // Ignore
     case ' ':
     case '\r':
@@ -31,8 +46,9 @@ void Lexer::analyze() {
     default:
       if (isAlpha(c))
         handleIdentifier();
-      else if (isNumeric(c)) {
-      } else
+      else if (isNumeric(c))
+        handleNumber();
+      else
         logError("Unexpected character.");
     }
     c = advance();
@@ -44,6 +60,12 @@ bool Lexer::atEnd() { return current >= source.length(); }
 
 char Lexer::getCurrent() { return source.at(current); }
 
+void Lexer::handleComment() {
+  std::string comment;
+  while (peek() != '\n') comment.push_back(advance());
+  addToken(TokenType::TOKEN_COMMENT, comment);
+}
+
 void Lexer::handleIdentifier() {
   std::string identifier;
   identifier.push_back(advance());
@@ -52,6 +74,14 @@ void Lexer::handleIdentifier() {
   if (keywords.contains(identifier))
     return addToken(keywords.at(identifier));
   return addToken(TokenType::TOKEN_IDENTIFIER, identifier);
+}
+
+void Lexer::handleNumber() {
+  std::string number;
+  number.push_back(advance());
+  while (isNumeric(peek()))
+    number.push_back(advance());
+  addToken(TokenType::TOKEN_INTEGER, number);
 }
 
 bool Lexer::isAlpha(char control) { return isalpha(control); }
