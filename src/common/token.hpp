@@ -41,14 +41,6 @@ enum class TokenType {
   TOKEN_EOF,
 };
 
-std::unordered_map<std::string, TokenType> keywords = {
-    {"program", TokenType::TOKEN_PROGRAM_TYPE},
-    {"report", TokenType::TOKEN_REPORT},
-    {"name", TokenType::TOKEN_NAME},
-    {"print", TokenType::TOKEN_PRINT},
-    {"skip", TokenType::TOKEN_SKIP},
-    {"line", TokenType::TOKEN_LINE}};
-
 class Token {
   TokenType type;
   std::string value;

@@ -20,6 +20,7 @@ class Lexer {
   void handleComment();
   void handleIdentifier();
   void handleNumber();
+  void handleString();
   bool isAlpha(char control);
   bool isAlphaNumeric(char control);
   bool isNumeric(char control);
