@@ -7,7 +7,7 @@
 
 namespace ABRUHP {
 std::unordered_map<std::string, TokenType> keywords = {
-    {"program", TokenType::TOKEN_PROGRAM_TYPE},
+    {"type", TokenType::TOKEN_PROGRAM_TYPE},
     {"report", TokenType::TOKEN_REPORT},
     {"name", TokenType::TOKEN_NAME},
     {"print", TokenType::TOKEN_PRINT},
@@ -23,9 +23,8 @@ void Lexer::addToken(TokenType type, std::string value) {
 }
 
 char Lexer::advance() {
-  char result = getCurrent();
   current += 1;
-  return result;
+  return !atEnd() ? getCurrent() : '\0';
 }
 
 void Lexer::analyze() {
@@ -77,16 +76,14 @@ void Lexer::handleComment() {
   std::string comment;
   while (peek() != '\n')
     comment.push_back(advance());
-  comment.push_back(getCurrent());
   addToken(TokenType::TOKEN_COMMENT, comment);
 }
 
 void Lexer::handleIdentifier() {
   std::string identifier;
-  identifier.push_back(advance());
+  identifier.push_back(getCurrent());
   while (isAlphaNumeric(peek()))
     identifier.push_back(advance());
-  identifier.push_back(getCurrent());
   if (keywords.contains(identifier))
     return addToken(keywords.at(identifier));
   return addToken(TokenType::TOKEN_IDENTIFIER, identifier);
@@ -94,10 +91,9 @@ void Lexer::handleIdentifier() {
 
 void Lexer::handleNumber() {
   std::string number;
-  number.push_back(advance());
+  number.push_back(getCurrent());
   while (isNumeric(peek()))
     number.push_back(advance());
-  number.push_back(getCurrent());
   addToken(TokenType::TOKEN_INTEGER, number);
 }
 
@@ -105,10 +101,14 @@ void Lexer::handleString() {
   std::string value;
   while (peek() != '"')
     value.push_back(advance());
+  advance();
   addToken(TokenType::TOKEN_STRING, value);
 }
 
-bool Lexer::isAlpha(char control) { return (control >= 'a' && control <= 'z') || (control >= 'A' && control <= 'Z'); }
+bool Lexer::isAlpha(char control) {
+  return (control >= 'a' && control <= 'z') ||
+         (control >= 'A' && control <= 'Z');
+}
 
 bool Lexer::isAlphaNumeric(char control) {
   return isAlpha(control) || isNumeric(control);
