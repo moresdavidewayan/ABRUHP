@@ -105,10 +105,7 @@ void Lexer::handleString() {
   addToken(TokenType::TOKEN_STRING, value);
 }
 
-bool Lexer::isAlpha(char control) {
-  return (control >= 'a' && control <= 'z') ||
-         (control >= 'A' && control <= 'Z');
-}
+bool Lexer::isAlpha(char control) { return isalpha(control); }
 
 bool Lexer::isAlphaNumeric(char control) {
   return isAlpha(control) || isNumeric(control);
