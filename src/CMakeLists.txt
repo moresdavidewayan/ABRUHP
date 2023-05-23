@@ -1,1 +1,3 @@
-add_executable(ABRUHP main.cpp common/token.cpp common/log.cpp common/utils.cpp lexer/lexer.cpp)
+add_subdirectory(common)
+add_subdirectory(lexer)
+add_subdirectory(parser)

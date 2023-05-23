@@ -5,4 +5,8 @@ set(CXX_STANDARD_REQUIRED true)
 set(CMAKE_CXX_STANDARD 20)
 
 project(ABRUHP)
+
 add_subdirectory(src)
+
+add_executable(ABRUHP src/main.cpp)
+target_link_libraries(ABRUHP common lexer parser ast)

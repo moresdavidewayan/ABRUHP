@@ -1,0 +1,1 @@
+add_library(ast ast_node.cpp program_node.cpp program_declaration_node.cpp)
