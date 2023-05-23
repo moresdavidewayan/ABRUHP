@@ -3,6 +3,14 @@
 #include <format>
 
 namespace ABRUHP {
+Token::Token(TokenType type) : type(type) {}
+
+Token::Token(TokenType type, std::string value) : type(type), value(value) {}
+
+TokenType Token::getType() { return type; }
+
+std::string Token::getValue() { return value; }
+
 std::string Token::toString() {
   switch (type) {
   case TokenType::TOKEN_PROGRAM_TYPE:
@@ -45,6 +53,5 @@ std::string Token::toString() {
 } // namespace ABRUHP
 
 std::ostream &operator<<(std::ostream &os, ABRUHP::Token &tk) {
-  os << tk.toString();
-  return os;
+  return os << tk.toString();
 }

@@ -14,8 +14,6 @@ std::unordered_map<std::string, TokenType> keywords = {
     {"skip", TokenType::TOKEN_SKIP},
     {"line", TokenType::TOKEN_LINE}};
 
-Token::Token(TokenType type) : type(type) {}
-Token::Token(TokenType type, std::string value) : type(type), value(value) {}
 void Lexer::addToken(TokenType type) { tokens.push_back(Token(type)); }
 
 void Lexer::addToken(TokenType type, std::string value) {

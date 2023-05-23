@@ -49,6 +49,8 @@ public:
   Token(TokenType type);
   Token(TokenType type, std::string value);
 
+  TokenType getType();
+  std::string getValue();
   std::string toString();
 };
 } // namespace ABRUHP
