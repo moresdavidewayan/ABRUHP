@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     source = readFile(path);
   } else if (argc == 1) {
     std::string path;
-    std::cout << "Dammi il percorso:";
+    std::cout << "File path: ";
     std::cin >> path;
     source = readFile(path);
   } else
