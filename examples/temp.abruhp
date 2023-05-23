@@ -1,0 +1,6 @@
+type report name "z_something"
+
+#comment
+
+main():
+	print("hello world")
