@@ -3,7 +3,7 @@
 ## Dependencies
 
 In order to compile ABRUHP you need to have at least this tools installed on your machine
-- cmake
+- cmake (v3.26.3 or higher)
 - a C++20 compiler compatible with cmake
 
 ## Common steps
