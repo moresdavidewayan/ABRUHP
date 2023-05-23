@@ -4,3 +4,5 @@ type report name "z_something"
 
 main():
 	print("hello world")
+    skip()
+    line()
