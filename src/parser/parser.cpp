@@ -19,12 +19,11 @@ std::unique_ptr<ProgramNode> Parser::handleProgram() {
     advance();
   if (atEnd())
     logError("Unexpected EOF, expected: program declaration");
-  if (getCurrent() == TokenType::TOKEN_PROGRAM_TYPE)
-    declaration = handleProgramDeclaration();
-  else
+  if (getCurrent() != TokenType::TOKEN_PROGRAM_TYPE)
     logError("Unexpected token, expected: program declaration");
+  declaration = handleProgramDeclaration();
 
-  return std::make_unique<ProgramNode>(handleProgramDeclaration());
+  return std::make_unique<ProgramNode>(std::move(declaration));
 }
 
 std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
@@ -34,13 +33,13 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
     logError("Unexpected token, expected: name");
   if (advance() != TokenType::TOKEN_STRING)
     logError("Unexpected token, expected: string");
-  return std::make_unique<ProgramDeclarationNode>(Token(TokenType::TOKEN_REPORT),
-                                                  getCurrent());
+  return std::make_unique<ProgramDeclarationNode>(
+      Token(TokenType::TOKEN_REPORT), getCurrent());
 }
 
-Parser::Parser(std::vector<Token> tokens) : tokens(tokens) {}
-
-std::unique_ptr<ProgramNode> Parser::parse() {
-  return std::move(handleProgram());
+Parser::Parser(std::vector<Token> tokens) : tokens(tokens) {
+  program = std::move(handleProgram());
 }
+
+std::unique_ptr<ProgramNode> Parser::parse() { return std::move(program); }
 } // namespace ABRUHP

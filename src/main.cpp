@@ -1,9 +1,9 @@
 #include <fstream>
 #include <iostream>
 
-#include "common/log.hpp"
-#include "common/utils.hpp"
+#include "common/common.hpp"
 #include "lexer/lexer.hpp"
+#include "parser/parser.hpp"
 
 void printUsage();
 
@@ -22,9 +22,14 @@ int main(int argc, char *argv[]) {
     printUsage();
 
   ABRUHP::Lexer lexer(source);
-  for (ABRUHP::Token token : lexer.getTokens()) {
+  std::vector<ABRUHP::Token> tokens = lexer.getTokens();
+  for (ABRUHP::Token token : tokens) {
     std::cout << token << std::endl;
   }
+
+  ABRUHP::Parser parser(tokens);
+  std::unique_ptr<ABRUHP::ASTNode> program = parser.parse();
+  std::cout << program->toString() << std::endl;
 
   return EXIT_SUCCESS;
 }
