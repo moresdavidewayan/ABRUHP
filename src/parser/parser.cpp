@@ -34,8 +34,8 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
     logError("Unexpected token, expected: name");
   if (advance() != TokenType::TOKEN_STRING)
     logError("Unexpected token, expected: string");
-  return std::make_unique<ProgramDeclarationNode>(TokenType::TOKEN_REPORT,
-                                                  getCurrent().getValue());
+  return std::make_unique<ProgramDeclarationNode>(Token(TokenType::TOKEN_REPORT),
+                                                  getCurrent());
 }
 
 Parser::Parser(std::vector<Token> tokens) : tokens(tokens) {}
