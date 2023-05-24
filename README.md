@@ -30,7 +30,7 @@ cmake -S . -B build
 ## Roadmap
 ### Compiler
 - [x] lexer
-- [ ] parser
+- [x] parser
 - [ ] code generation
 - [ ] compile-time optimizations
 - [ ] runtime optimizations
