@@ -74,6 +74,7 @@ void Lexer::handleComment() {
   std::string comment;
   while (peek() != '\n')
     comment.push_back(advance());
+  advance();
   addToken(TokenType::TOKEN_COMMENT, comment);
 }
 

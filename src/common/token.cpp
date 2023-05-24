@@ -50,6 +50,13 @@ std::string Token::toString() {
   }
   return "";
 }
+
+bool Token::operator==(const TokenType type) { return this->getType() == type; }
+
+bool Token::operator==(Token tk) {
+  return this->getType() == tk.getType() &&
+         this->getValue().compare(tk.getValue());
+}
 } // namespace ABRUHP
 
 std::ostream &operator<<(std::ostream &os, ABRUHP::Token &tk) {

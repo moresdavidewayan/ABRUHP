@@ -4,7 +4,7 @@
 #include <ostream>
 #include <string>
 
-#include "../../common/token.hpp"
+#include "../../common/common.hpp"
 
 namespace ABRUHP {
 class ASTNode {

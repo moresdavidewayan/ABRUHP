@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "../common/token.hpp"
+#include "../common/common.hpp"
 
 namespace ABRUHP {
 class Lexer {

@@ -52,6 +52,9 @@ public:
   TokenType getType();
   std::string getValue();
   std::string toString();
+
+  bool operator==(const TokenType type);
+  bool operator==(Token tk);
 };
 } // namespace ABRUHP
 
