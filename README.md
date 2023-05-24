@@ -39,6 +39,8 @@ cmake -S . -B build
 - [x] PRINT statement
 - [x] SKIP statement
 - [x] LINE statement
+- [x] line comments
+- [ ] inline comments
 - [ ] global variables
 - [ ] forms
 - [ ] functions
