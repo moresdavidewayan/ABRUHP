@@ -1,5 +1,5 @@
 # ARBUHP
-A programming language for those who find ABAP frustrating.
+A programming language and a source-to-source compiler for those who find ABAP frustrating.
 
 ## Index
 
@@ -32,6 +32,8 @@ cmake -S . -B build
 - [x] lexer
 - [ ] parser
 - [ ] code generation
+- [ ] compile-time optimizations
+- [ ] runtime optimizations
 
 ### Basic ABAP functionalities
 - [x] PRINT statement
