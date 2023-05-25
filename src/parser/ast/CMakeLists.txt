@@ -1,1 +1,1 @@
-add_library(ast ast_node.cpp program_node.cpp program_declaration_node.cpp)
+add_library(ast ast_node.cpp program_node.cpp program_declaration_node.cpp print_statement_node.cpp skip_statement_node.cpp)

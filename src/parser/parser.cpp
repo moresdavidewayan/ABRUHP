@@ -37,6 +37,10 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
       Token(TokenType::TOKEN_REPORT), getCurrent());
 }
 
+std::unique_ptr<StatementNode> Parser::handleStatement() {
+  return nullptr;
+}
+
 Parser::Parser(std::vector<Token> tokens) : tokens(tokens) {
   program = std::move(handleProgram());
 }

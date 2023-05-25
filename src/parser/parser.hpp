@@ -16,6 +16,7 @@ class Parser {
   Token getCurrent();
   std::unique_ptr<ProgramNode> handleProgram();
   std::unique_ptr<ProgramDeclarationNode> handleProgramDeclaration();
+  std::unique_ptr<StatementNode> handleStatement();
 
 public:
   Parser(std::vector<Token> tokens);
