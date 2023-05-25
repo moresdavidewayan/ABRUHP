@@ -11,5 +11,6 @@ public:
   ProgramNode(std::unique_ptr<ProgramDeclarationNode> declaration);
 
   virtual std::string toString();
+  virtual std::string generate();
 };
 } // namespace ABRUHP

@@ -11,5 +11,6 @@ public:
   ProgramDeclarationNode(Token type, Token name);
 
   virtual std::string toString();
+  virtual std::string generate();
 };
 } // namespace ABRUHP
