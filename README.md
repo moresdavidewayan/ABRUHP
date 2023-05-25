@@ -1,4 +1,4 @@
-# ARBUHP
+# ABRUHP
 A programming language and a source-to-source compiler for those who find ABAP frustrating.
 
 ## Index
@@ -31,7 +31,7 @@ cmake -S . -B build
 ### Compiler
 - [x] lexer
 - [x] parser
-- [ ] code generation
+- [x] code generation
 - [ ] compile-time optimizations
 - [ ] runtime optimizations
 
