@@ -19,12 +19,24 @@ In order to compile ABRUHP you need to have at least this tools installed on you
 - [CMake](https://cmake.org/download/) (v3.26.3 or higher)
 - [Visual Studio Build Tools 2019](https://visualstudio.microsoft.com/downloads/) (v16.11.25 or higher)
 
+**Linux**
+- [CMake](https://cmake.org/download/) (v3.26.3 or higher)
+- [gcc](https://gcc.gnu.org/) (v13.1.1 or higher)
 
-### Common steps
+
+### Build
+
+**Common steps**
 ```bash
 git clone https://github.com/moresdavidewayan/ABRUHP.git
 cd ABRUHP
 cmake -S . -B build
+```
+
+**Linux**
+```bash
+cd build
+make
 ```
 
 ## Roadmap
