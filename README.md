@@ -45,7 +45,6 @@ make
 - [x] parser
 - [x] code generation
 - [ ] compile-time optimizations
-- [ ] runtime optimizations
 
 ### Basic ABAP functionalities
 - [x] PRINT statement
