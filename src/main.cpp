@@ -15,9 +15,6 @@ int main(int argc, char *argv[]) {
 
   ABRUHP::Lexer lexer(source);
   std::vector<ABRUHP::Token> tokens = lexer.getTokens();
-  for (ABRUHP::Token token : tokens) {
-    std::cout << token << std::endl;
-  }
 
   ABRUHP::Parser parser(tokens);
   std::unique_ptr<ABRUHP::ASTNode> program = parser.parse();

@@ -3,7 +3,9 @@
 #include <vector>
 
 #include "../common/common.hpp"
-#include "ast/ast.hpp"
+#include "ast/program_node.hpp"
+#include "ast/program_declaration_node.hpp"
+#include "ast/statement_node.hpp"
 
 namespace ABRUHP {
 class Parser {
