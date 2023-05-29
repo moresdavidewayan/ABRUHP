@@ -1,1 +1,1 @@
-add_library(common log.cpp token.cpp utils.cpp)
+add_library(common SHARED log.cpp token.cpp utils.cpp)
