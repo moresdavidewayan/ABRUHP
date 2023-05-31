@@ -14,10 +14,10 @@ std::unordered_map<std::string, TokenType> keywords = {
     {"skip", TokenType::TOKEN_SKIP},
     {"line", TokenType::TOKEN_LINE}};
 
-void Lexer::addToken(TokenType type) { tokens.push_back(Token(type)); }
+void Lexer::addToken(TokenType type) { tokens.push_back(Token(type, line)); }
 
 void Lexer::addToken(TokenType type, std::string value) {
-  tokens.push_back(Token(type, value));
+  tokens.push_back(Token(type, value, line));
 }
 
 char Lexer::advance() {
@@ -33,6 +33,7 @@ void Lexer::analyze() {
       handleString();
       break;
     case '\n':
+      line += 1;
       addToken(TokenType::TOKEN_NEW_LINE);
       break;
     case '\t':
@@ -59,7 +60,7 @@ void Lexer::analyze() {
       else if (isNumeric(c))
         handleNumber();
       else
-        logError(std::format("Unexpected character.{}", getCurrent()));
+        logError(std::format("Unexpected character.{}", getCurrent()), line);
     }
     c = advance();
   }
@@ -74,6 +75,7 @@ void Lexer::handleComment() {
   std::string comment;
   while (peek() != '\n')
     comment.push_back(advance());
+  line += 1;
   advance();
   addToken(TokenType::TOKEN_COMMENT, comment);
 }

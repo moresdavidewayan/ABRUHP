@@ -4,7 +4,7 @@
 
 namespace ABRUHP {
 ProgramDeclarationNode::ProgramDeclarationNode(Token type, Token name)
-    : type(type.getType()), name(name.getValue()) {}
+    : type(type), name(name.getValue()) {}
 
 std::string ProgramDeclarationNode::toString() {
   return std::format("(PROGRAM {} NAME {})", type.toString(), name);

@@ -44,11 +44,13 @@ enum class TokenType {
 class Token {
   TokenType type;
   std::string value;
+  size_t line;
 
 public:
-  Token(TokenType type);
-  Token(TokenType type, std::string value);
+  Token(TokenType type, size_t line);
+  Token(TokenType type, std::string value, size_t line);
 
+  size_t getLine();
   TokenType getType();
   std::string getValue();
   std::string toString();

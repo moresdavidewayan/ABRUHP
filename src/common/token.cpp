@@ -3,9 +3,13 @@
 #include <format>
 
 namespace ABRUHP {
-Token::Token(TokenType type) : type(type) {}
+Token::Token(TokenType type, size_t line) : type(type), line(line) {}
 
-Token::Token(TokenType type, std::string value) : type(type), value(value) {}
+Token::Token(TokenType type, std::string value, size_t line) : type(type), value(value), line(line){}
+
+size_t Token::getLine(){
+  return line;
+}
 
 TokenType Token::getType() { return type; }
 

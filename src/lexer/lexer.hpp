@@ -9,7 +9,7 @@ namespace ABRUHP {
 class Lexer {
   std::string source;
   std::vector<Token> tokens;
-  size_t current = 0;
+  size_t current = 0, line = 1;
 
   void addToken(TokenType type);
   void addToken(TokenType type, std::string value);
