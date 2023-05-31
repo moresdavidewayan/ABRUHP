@@ -1,5 +1,5 @@
 # ABRUHP
-A programming language and a source-to-source compiler for those who find ABAP frustrating.
+A programming language and a source-to-source compiler aimed at fixing ABAP's horrible syntax.
 
 ## Index
 
