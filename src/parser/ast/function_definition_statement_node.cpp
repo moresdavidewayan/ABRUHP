@@ -10,6 +10,7 @@ namespace ABRUHP {
     }
 
     std::string FunctionDefinitionStatementNode::generate() {
+        if (name == "main") return body->generate();
         return std::format("FORM {}.\n{}\nENDFORM.", name, body->generate());
     }
 }
