@@ -10,6 +10,27 @@ bool Parser::atEnd() { return current >= tokens.size(); }
 
 Token Parser::getCurrent() { return tokens.at(current); }
 
+std::unique_ptr<BlockNode> Parser::handleBlock() {
+  indentation_level += 1;
+  return nullptr;
+}
+
+std::unique_ptr<FunctionDefinitionStatementNode> Parser::handleFunctionDefinitionStatement() {
+  return nullptr;
+}
+
+std::unique_ptr<InstructionNode> Parser::handleInstruction() {
+  return nullptr;
+}
+
+std::unique_ptr<LineStatementNode> Parser::handleLineStatement() {
+  return nullptr;
+}
+
+std::unique_ptr<PrintStatementNode> Parser::handlePrintStatement() {
+  return nullptr;
+}
+
 std::unique_ptr<ProgramNode> Parser::handleProgram() {
   std::unique_ptr<ProgramDeclarationNode> declaration;
 
@@ -37,6 +58,10 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
   if (advance() != TokenType::TOKEN_STRING)
     logError("Unexpected token, expected: string", getCurrent().getLine());
   return std::make_unique<ProgramDeclarationNode>(programType, getCurrent());
+}
+
+std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
+  return nullptr;
 }
 
 std::unique_ptr<StatementNode> Parser::handleStatement() { return nullptr; }

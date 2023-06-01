@@ -50,7 +50,7 @@ make
 - [x] PRINT statement
 - [x] SKIP statement
 - [x] LINE statement
-- [x] line comments
+- [ ] line comments
 - [ ] inline comments
 - [ ] global variables
 - [ ] forms
