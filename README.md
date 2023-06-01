@@ -1,15 +1,6 @@
 # ABRUHP
 A programming language and a source-to-source compiler aimed at fixing ABAP's horrible syntax.
 
-## Index
-
-- [Install from source](#install-from-source)
-    - [Dependencies](#dependencies)
-    - [Common steps](#common-steps)
-- [Roadmap](#roadmap)
-    - [Compiler](#compiler)
-    - [Basic ABAP functionalities](#basic-abap-functionalities)
-
 ## Install from source
 
 ### Dependencies
