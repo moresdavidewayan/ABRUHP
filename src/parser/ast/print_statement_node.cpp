@@ -3,8 +3,8 @@
 #include <format>
 
 namespace ABRUHP {
-PrintStatementNode::PrintStatementNode(std::string message)
-    : message(message) {}
+PrintStatementNode::PrintStatementNode(Token message)
+    : message(message.getValue()) {}
 
 std::string PrintStatementNode::toString() {
   return std::format("[PRINT: {}]", message);

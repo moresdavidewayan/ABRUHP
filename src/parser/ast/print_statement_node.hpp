@@ -7,7 +7,7 @@ class PrintStatementNode : public StatementNode {
   std::string message;
 
 public:
-  PrintStatementNode(std::string message);
+  PrintStatementNode(Token message);
 
   virtual std::string toString();
   virtual std::string generate();

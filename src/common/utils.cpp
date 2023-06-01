@@ -15,7 +15,7 @@ std::string readFile(std::string path) {
       result.push_back('\n');
     }
   } else
-    ABRUHP::logError("Cannot read file.");
+    logError("Cannot read file.");
 
   return result;
 }

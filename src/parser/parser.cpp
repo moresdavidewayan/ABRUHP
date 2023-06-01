@@ -1,5 +1,11 @@
 #include "parser.hpp"
 
+#include <format>
+
+void unexpected_token(std::string expected, ABRUHP::Token tk) {
+  logError(std::format("Unexpected token, expected: {}", expected), tk.getLine());
+}
+
 namespace ABRUHP {
 Token Parser::advance() {
   current += 1;
@@ -17,20 +23,26 @@ std::unique_ptr<BlockNode> Parser::handleBlock() {
   return nullptr;
 }
 
-std::unique_ptr<FunctionDefinitionStatementNode> Parser::handleFunctionDefinitionStatement() {
+std::unique_ptr<FunctionDefinitionStatementNode>
+Parser::handleFunctionDefinitionStatement() {
   return nullptr;
 }
 
-std::unique_ptr<InstructionNode> Parser::handleInstruction() {
-  return nullptr;
-}
+std::unique_ptr<InstructionNode> Parser::handleInstruction() { return nullptr; }
 
 std::unique_ptr<LineStatementNode> Parser::handleLineStatement() {
   return nullptr;
 }
 
 std::unique_ptr<PrintStatementNode> Parser::handlePrintStatement() {
-  return nullptr;
+  if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS) 
+  unexpected_token("(", getCurrent());
+  Token message = advance();
+  if (message != TokenType::TOKEN_STRING)
+  unexpected_token("\"", message);
+  if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
+  unexpected_token(")", getCurrent());
+  return std::make_unique<PrintStatementNode>(message);
 }
 
 std::unique_ptr<ProgramNode> Parser::handleProgram() {
@@ -41,11 +53,9 @@ std::unique_ptr<ProgramNode> Parser::handleProgram() {
                       getCurrent() == TokenType::TOKEN_INDENTATION))
     advance();
   if (atEnd())
-    logError("Unexpected EOF, expected: program declaration",
-             getCurrent().getLine());
+    unexpected_token("program declaration", getCurrent());
   if (getCurrent() != TokenType::TOKEN_PROGRAM_TYPE)
-    logError("Unexpected token, expected: program declaration",
-             getCurrent().getLine());
+    unexpected_token("program declaration", getCurrent());
   declaration = handleProgramDeclaration();
 
   return std::make_unique<ProgramNode>(std::move(declaration));
@@ -54,21 +64,24 @@ std::unique_ptr<ProgramNode> Parser::handleProgram() {
 std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
   Token programType = advance();
   if (programType != TokenType::TOKEN_REPORT)
-    logError("Unexpected token, expected: report", programType.getLine());
+    unexpected_token("report", programType);
   if (advance() != TokenType::TOKEN_NAME)
-    logError("Unexpected token, expected: name", getCurrent().getLine());
+    unexpected_token("name", getCurrent());
   if (advance() != TokenType::TOKEN_STRING)
-    logError("Unexpected token, expected: string", getCurrent().getLine());
+    unexpected_token("string", getCurrent());
   return std::make_unique<ProgramDeclarationNode>(programType, getCurrent());
 }
 
 std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
   if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS)
-  logError("Unexpected token, expected: (", getCurrent().getLine());
+    unexpected_token("(", getCurrent());
   Token next = advance();
-  if (next == TokenType::TOKEN_RIGHT_PARENTHESIS) return std::make_unique<SkipStatementNode>();
+  if (next == TokenType::TOKEN_RIGHT_PARENTHESIS)
+    return std::make_unique<SkipStatementNode>();
   if (next != TokenType::TOKEN_INTEGER)
-  logError("Unexpected token, integer number or ) expected", next.getLine());
+    unexpected_token("integer number or )", next);
+  if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
+    unexpected_token(")", getCurrent());
   return std::make_unique<SkipStatementNode>(next);
 }
 
