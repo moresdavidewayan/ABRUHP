@@ -12,6 +12,8 @@ Token Parser::getCurrent() { return tokens.at(current); }
 
 std::unique_ptr<BlockNode> Parser::handleBlock() {
   indentation_level += 1;
+
+  indentation_level -= 1;
   return nullptr;
 }
 
@@ -61,7 +63,13 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
 }
 
 std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
-  return nullptr;
+  if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS)
+  logError("Unexpected token, expected: (", getCurrent().getLine());
+  Token next = advance();
+  if (next == TokenType::TOKEN_RIGHT_PARENTHESIS) return std::make_unique<SkipStatementNode>();
+  if (next != TokenType::TOKEN_INTEGER)
+  logError("Unexpected token, integer number or ) expected", next.getLine());
+  return std::make_unique<SkipStatementNode>(next);
 }
 
 std::unique_ptr<StatementNode> Parser::handleStatement() { return nullptr; }

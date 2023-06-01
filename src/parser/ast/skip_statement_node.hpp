@@ -8,7 +8,7 @@ class SkipStatementNode : public StatementNode {
 
 public:
   SkipStatementNode();
-  SkipStatementNode(size_t lines);
+  SkipStatementNode(Token lines);
 
   virtual std::string toString();
   virtual std::string generate();
