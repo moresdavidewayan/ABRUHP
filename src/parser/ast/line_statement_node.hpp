@@ -8,7 +8,7 @@ namespace ABRUHP {
 
         public:
         LineStatementNode();
-        LineStatementNode(size_t lines);
+        LineStatementNode(Token lines);
 
         virtual std::string toString();
         virtual std::string generate();
