@@ -57,6 +57,8 @@ public:
 
   bool operator==(const TokenType type);
   bool operator==(Token tk);
+  bool operator!=(const TokenType type);
+  bool operator!=(Token tk);
 };
 } // namespace ABRUHP
 

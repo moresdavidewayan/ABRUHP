@@ -108,6 +108,7 @@ std::unique_ptr<PrintStatementNode> Parser::handlePrintStatement() {
 
 std::unique_ptr<ProgramNode> Parser::handleProgram() {
   std::unique_ptr<ProgramDeclarationNode> declaration;
+  std::vector<std::unique_ptr<StatementNode>> statements;
 
   while (!atEnd() && (getCurrent() == TokenType::TOKEN_COMMENT ||
                       getCurrent() == TokenType::TOKEN_NEW_LINE ||
@@ -122,7 +123,16 @@ std::unique_ptr<ProgramNode> Parser::handleProgram() {
 
   declaration = handleProgramDeclaration();
 
-  return std::make_unique<ProgramNode>(std::move(declaration));
+  while (!atEnd()) {
+    if (getCurrent() == TokenType::TOKEN_COMMENT ||
+        getCurrent() == TokenType::TOKEN_NEW_LINE) {
+      advance();
+      continue;
+    }
+    statements.push_back(std::move(handleStatement()));
+  }
+
+  return std::make_unique<ProgramNode>(std::move(declaration), std::move(statements));
 }
 
 std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
@@ -137,7 +147,7 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
   if (advance() != TokenType::TOKEN_STRING)
     unexpected_token("string", getCurrent());
 
-  return std::make_unique<ProgramDeclarationNode>(programType, getCurrent());
+  return std::make_unique<ProgramDeclarationNode>(programType, advance());
 }
 
 std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
@@ -161,7 +171,7 @@ std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
 std::unique_ptr<StatementNode> Parser::handleStatement() {
   std::unique_ptr<StatementNode> statement = nullptr;
 
-  Token next = advance();
+  Token next = getCurrent();
   switch (next.getType()) {
   case TokenType::TOKEN_IDENTIFIER:
     statement = std::move(handleFunctionDefinitionStatement());

@@ -5,11 +5,10 @@
 namespace ABRUHP {
 Token::Token(TokenType type, size_t line) : type(type), line(line) {}
 
-Token::Token(TokenType type, std::string value, size_t line) : type(type), value(value), line(line){}
+Token::Token(TokenType type, std::string value, size_t line)
+    : type(type), value(value), line(line) {}
 
-size_t Token::getLine(){
-  return line;
-}
+size_t Token::getLine() { return line; }
 
 TokenType Token::getType() { return type; }
 
@@ -61,6 +60,10 @@ bool Token::operator==(Token tk) {
   return this->getType() == tk.getType() &&
          this->getValue().compare(tk.getValue());
 }
+
+bool Token::operator!=(const TokenType type) { return !this->operator==(type); }
+
+bool Token::operator!=(Token tk) { return !this->operator==(tk); }
 } // namespace ABRUHP
 
 std::ostream &operator<<(std::ostream &os, ABRUHP::Token &tk) {
