@@ -17,11 +17,31 @@ bool Parser::atEnd() { return current >= tokens.size(); }
 
 Token Parser::getCurrent() { return tokens.at(current); }
 
+Token Parser::peek() {
+  if (current >= tokens.size() - 1)
+    logError("EOF");
+  return tokens.at(current + 1);
+}
+
 std::unique_ptr<BlockNode> Parser::handleBlock() {
   indentation_level += 1;
 
+  std::vector<std::unique_ptr<InstructionNode>> instructions;
+
+  while (!atEnd()) {
+    size_t count_indentations = 0;
+    while (advance() == TokenType::TOKEN_INDENTATION)
+      count_indentations += 1;
+    if (peek() == TokenType::TOKEN_NEW_LINE ||
+        peek() == TokenType::TOKEN_COMMENT)
+      continue;
+    if (count_indentations < indentation_level)
+      break;
+    instructions.push_back(handleInstruction());
+  }
+
   indentation_level -= 1;
-  return nullptr;
+  return std::make_unique<BlockNode>(std::move(instructions));
 }
 
 std::unique_ptr<FunctionDefinitionStatementNode>
