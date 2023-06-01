@@ -3,7 +3,8 @@
 #include <format>
 
 void unexpected_token(std::string expected, ABRUHP::Token tk) {
-  logError(std::format("Unexpected token, expected: {}", expected), tk.getLine());
+  logError(std::format("Unexpected token, expected: {}", expected),
+           tk.getLine());
 }
 
 namespace ABRUHP {
@@ -31,17 +32,26 @@ Parser::handleFunctionDefinitionStatement() {
 std::unique_ptr<InstructionNode> Parser::handleInstruction() { return nullptr; }
 
 std::unique_ptr<LineStatementNode> Parser::handleLineStatement() {
-  return nullptr;
+  if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS)
+    unexpected_token("(", getCurrent());
+  Token lines = advance();
+  if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS)
+    return std::make_unique<LineStatementNode>();
+  if (lines != TokenType::TOKEN_INTEGER)
+    unexpected_token("integer number or )", lines);
+  if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
+    unexpected_token(")", getCurrent());
+  return std::make_unique<LineStatementNode>(lines);
 }
 
 std::unique_ptr<PrintStatementNode> Parser::handlePrintStatement() {
-  if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS) 
-  unexpected_token("(", getCurrent());
+  if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS)
+    unexpected_token("(", getCurrent());
   Token message = advance();
   if (message != TokenType::TOKEN_STRING)
-  unexpected_token("\"", message);
+    unexpected_token("\"", message);
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
-  unexpected_token(")", getCurrent());
+    unexpected_token(")", getCurrent());
   return std::make_unique<PrintStatementNode>(message);
 }
 
@@ -75,14 +85,14 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
 std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
   if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS)
     unexpected_token("(", getCurrent());
-  Token next = advance();
-  if (next == TokenType::TOKEN_RIGHT_PARENTHESIS)
+  Token lines = advance();
+  if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS)
     return std::make_unique<SkipStatementNode>();
-  if (next != TokenType::TOKEN_INTEGER)
-    unexpected_token("integer number or )", next);
+  if (lines != TokenType::TOKEN_INTEGER)
+    unexpected_token("integer number or )", lines);
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")", getCurrent());
-  return std::make_unique<SkipStatementNode>(next);
+  return std::make_unique<SkipStatementNode>(lines);
 }
 
 std::unique_ptr<StatementNode> Parser::handleStatement() { return nullptr; }
