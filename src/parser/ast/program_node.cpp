@@ -8,15 +8,15 @@ ProgramNode::ProgramNode(std::unique_ptr<ProgramDeclarationNode> declaration,
     : declaration(std::move(declaration)), statements(std::move(statements)) {}
 
 std::string ProgramNode::toString() {
-  std::string result;
+  std::string result = "[\n";
 
-  result += declaration->toString();
+  result += std::format("{},\n", declaration->toString());
 
   for (size_t index = 0; index < statements.size(); index += 1) {
     result += statements.at(index)->toString();
   }
 
-  return result;
+  return std::format("{}\n]", result);
 }
 
 std::string ProgramNode::generate() {

@@ -6,7 +6,7 @@ namespace ABRUHP {
     FunctionDefinitionStatementNode::FunctionDefinitionStatementNode(Token name, std::unique_ptr<BlockNode> body) : name(name.getValue()), body(std::move(body)) {}
 
     std::string FunctionDefinitionStatementNode::toString() {
-        return std::format("[FUNCTION: {}, BODY: {}]", name, body->toString());
+        return std::format("[FUNCTION: {},\nBODY: {}]", name, body->toString());
     }
 
     std::string FunctionDefinitionStatementNode::generate() {

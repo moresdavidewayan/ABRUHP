@@ -12,7 +12,7 @@ SkipStatementNode::SkipStatementNode(Token lines) {
 }
 
 std::string SkipStatementNode::toString() {
-  return std::format("(SKIP: {})", std::to_string(lines));
+  return std::format("[SKIP: {}]", std::to_string(lines));
 }
 
 std::string SkipStatementNode::generate() {
