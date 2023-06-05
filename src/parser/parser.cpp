@@ -163,10 +163,16 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
   if (advance() != TokenType::TOKEN_NAME)
     unexpected_token("name", getCurrent());
 
-  if (advance() != TokenType::TOKEN_STRING)
+  Token name = advance();
+
+  if (name != TokenType::TOKEN_STRING)
     unexpected_token("string", getCurrent());
 
-  return std::make_unique<ProgramDeclarationNode>(programType, advance());
+  if (advance() != TokenType::TOKEN_NEW_LINE &&
+      getCurrent() != TokenType::TOKEN_EOF)
+    unexpected_token("new line", getCurrent());
+
+  return std::make_unique<ProgramDeclarationNode>(programType, name);
 }
 
 std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
