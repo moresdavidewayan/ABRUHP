@@ -1,5 +1,7 @@
 #include "program_node.hpp"
 
+#include <format>
+
 namespace ABRUHP {
 ProgramNode::ProgramNode(std::unique_ptr<ProgramDeclarationNode> declaration,
                          std::vector<std::unique_ptr<StatementNode>> statements)
@@ -20,7 +22,7 @@ std::string ProgramNode::toString() {
 std::string ProgramNode::generate() {
   std::string result;
 
-  result += declaration->generate();
+  result += std::format("{}\n", declaration->generate());
 
   for (size_t index = 0; index < statements.size(); index += 1) {
     result += statements.at(index)->generate();

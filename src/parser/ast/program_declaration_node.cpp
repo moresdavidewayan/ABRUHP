@@ -7,7 +7,7 @@ ProgramDeclarationNode::ProgramDeclarationNode(Token type, Token name)
     : type(type), name(name.getValue()) {}
 
 std::string ProgramDeclarationNode::toString() {
-  return std::format("(PROGRAM {} NAME {})", type.toString(), name);
+  return std::format("[PROGRAM {} NAME {}]", type.toString(), name);
 }
 
 std::string ProgramDeclarationNode::generate() {
