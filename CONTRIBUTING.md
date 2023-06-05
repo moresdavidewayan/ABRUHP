@@ -6,12 +6,12 @@ Read our [Code of Conduct](./CODE_OF_CONDUCT.md) to keep our community approacha
 
 ## ❗ Issues
 
-### :zap: Create a new issue
+### ⚡ Create a new issue
 
 If you spot a problem, search if an issue already exists. If a related issue doesn't exist,
 you can open a new issue using a relevant [template](https://github.com/moresdavidewayan/ABRUHP/issues/new/choose).
 
-### :bug: Solve an issue
+### 🐛 Solve an issue
 
 Scan through our [existing issues](https://github.com/moresdavidewayan/ABRUHP/issues/) to find one that interests you.
 You can narrow down the search using `labels` as filters.
@@ -30,11 +30,11 @@ You can narrow down the search using `labels` as filters.
 
 3. Create a working branch and start with your changes!
 
-## :pencil2: Commit your update
+## ✏️ Commit your update
 
 Commit the changes once you are happy with them.
 
-## :rocket: Pull Request
+## 🚀 Pull Request
 
 When you're finished with the changes, create a pull request, also known as a PR.
 - Don't forget to [link PR to issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) if you are solving one.
@@ -44,6 +44,6 @@ Once you submit your PR, an ABRUHP team member will review your proposal. We may
 - As you update your PR and apply changes, mark each conversation as [resolved](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/commenting-on-a-pull-request#resolving-conversations).
 - If you run into any merge issues, checkout this [git tutorial](https://github.com/skills/resolve-merge-conflicts) to help you resolve merge conflicts and other issues.
 
-## :twisted_rightwards_arrows: Your PR is merged!
+## 🔀 Your PR is merged!
 
-Congratulations :tada::tada: the ABRUHP team thanks you :sparkles:.
+Congratulations 🎉🎉 the ABRUHP team thanks you ✨.
