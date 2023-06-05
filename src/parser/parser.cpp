@@ -13,7 +13,7 @@ Token Parser::advance() {
   return getCurrent();
 }
 
-bool Parser::atEnd() { return current >= tokens.size(); }
+bool Parser::atEnd() { return current >= tokens.size() - 1; }
 
 Token Parser::getCurrent() { return tokens.at(current); }
 
@@ -32,8 +32,10 @@ std::unique_ptr<BlockNode> Parser::handleBlock() {
   while (!atEnd()) {
     size_t count_indentations = 0;
 
-    while (advance() == TokenType::TOKEN_INDENTATION)
+    while (getCurrent() == TokenType::TOKEN_INDENTATION) {
       count_indentations += 1;
+      advance();
+    }
 
     if (peek() == TokenType::TOKEN_NEW_LINE ||
         peek() == TokenType::TOKEN_COMMENT)
@@ -64,6 +66,7 @@ Parser::handleFunctionDefinitionStatement() {
 
   if (advance() != TokenType::TOKEN_NEW_LINE)
     unexpected_token("new line", getCurrent());
+  advance();
 
   return std::make_unique<FunctionDefinitionStatementNode>(
       name, std::move(handleBlock()));
@@ -79,14 +82,24 @@ std::unique_ptr<LineStatementNode> Parser::handleLineStatement() {
 
   Token lines = advance();
 
-  if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS)
+  if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS) {
+    if (advance() != TokenType::TOKEN_NEW_LINE)
+      unexpected_token("new line", getCurrent());
+
+    advance();
     return std::make_unique<LineStatementNode>();
+  }
 
   if (lines != TokenType::TOKEN_INTEGER)
     unexpected_token("integer number or )", lines);
 
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")", getCurrent());
+
+  if (advance() != TokenType::TOKEN_NEW_LINE)
+    unexpected_token("new line", getCurrent());
+
+  advance();
 
   return std::make_unique<LineStatementNode>(lines);
 }
@@ -102,6 +115,11 @@ std::unique_ptr<PrintStatementNode> Parser::handlePrintStatement() {
 
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")", getCurrent());
+
+  if (advance() != TokenType::TOKEN_NEW_LINE)
+    unexpected_token("new line", getCurrent());
+
+  advance();
 
   return std::make_unique<PrintStatementNode>(message);
 }
@@ -132,7 +150,8 @@ std::unique_ptr<ProgramNode> Parser::handleProgram() {
     statements.push_back(std::move(handleStatement()));
   }
 
-  return std::make_unique<ProgramNode>(std::move(declaration), std::move(statements));
+  return std::make_unique<ProgramNode>(std::move(declaration),
+                                       std::move(statements));
 }
 
 std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
@@ -156,14 +175,25 @@ std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
 
   Token lines = advance();
 
-  if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS)
+  if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS) {
+    if (advance() != TokenType::TOKEN_NEW_LINE)
+      unexpected_token("new line", getCurrent());
+
+    advance();
+
     return std::make_unique<SkipStatementNode>();
+  }
 
   if (lines != TokenType::TOKEN_INTEGER)
     unexpected_token("integer number or )", lines);
 
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")", getCurrent());
+
+  if (advance() != TokenType::TOKEN_NEW_LINE)
+    unexpected_token("new line", getCurrent());
+
+  advance();
 
   return std::make_unique<SkipStatementNode>(lines);
 }
