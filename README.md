@@ -55,8 +55,8 @@ make
 
 ### Data types
 - [ ] byte field
-- [ ] byte field
+- [ ] text field
 - [ ] integer
-- [ ] byte field
+- [ ] floating point
 - [ ] packed number
 - [ ] text string
