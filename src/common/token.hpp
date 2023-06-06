@@ -33,7 +33,7 @@ enum class TokenType {
   // Standard functions
   TOKEN_PRINT,
   TOKEN_SKIP,
-  TOKEN_LINE,
+  TOKEN_ULINE,
 
   // Comment
   TOKEN_COMMENT,

@@ -11,6 +11,6 @@ std::string ProgramDeclarationNode::toString() {
 }
 
 std::string ProgramDeclarationNode::generate() {
-  return std::format("REPORT {}.", name);
+  return std::format("REPORT {}.\n", name);
 }
 } // namespace ABRUHP

@@ -42,8 +42,8 @@ std::string Token::toString() {
     return "[PRINT]";
   case TokenType::TOKEN_SKIP:
     return "[SKIP]";
-  case TokenType::TOKEN_LINE:
-    return "[LINE]";
+  case TokenType::TOKEN_ULINE:
+    return "[ULINE]";
   case TokenType::TOKEN_COMMENT:
     return std::format("[COMMENT: {}]", value);
   case TokenType::TOKEN_EOF:

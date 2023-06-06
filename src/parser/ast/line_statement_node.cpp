@@ -12,10 +12,10 @@ namespace ABRUHP {
     }
 
     std::string LineStatementNode::toString() {
-        return std::format("[LINES: {}]", std::to_string(lines));
+        return std::format("[ULINES: {}]", std::to_string(lines));
     }
 
     std::string LineStatementNode::generate() {
-        return std::format("LINE {}.", lines);
+        return std::format("ULINE {}.", lines);
     }
 }

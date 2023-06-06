@@ -12,7 +12,7 @@ std::unordered_map<std::string, TokenType> keywords = {
     {"name", TokenType::TOKEN_NAME},
     {"print", TokenType::TOKEN_PRINT},
     {"skip", TokenType::TOKEN_SKIP},
-    {"line", TokenType::TOKEN_LINE}};
+    {"uline", TokenType::TOKEN_ULINE}};
 
 void Lexer::addToken(TokenType type) { tokens.push_back(Token(type, line)); }
 
