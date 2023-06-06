@@ -41,6 +41,7 @@ make
 - [x] PRINT statement
 - [x] SKIP statement
 - [x] LINE statement
+- [ ] variable declaration
 - [ ] line comments
 - [ ] inline comments
 - [ ] global variables
@@ -51,3 +52,11 @@ make
 - [ ] structures
 - [ ] transparent tables
 - [ ] ...
+
+### Data types
+- [ ] byte field
+- [ ] byte field
+- [ ] integer
+- [ ] byte field
+- [ ] packed number
+- [ ] text string
