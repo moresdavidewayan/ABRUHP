@@ -13,5 +13,5 @@ project(
 
 add_subdirectory(src)
 
-add_executable(${PROJECT_NAME} src/main.cpp)
-target_link_libraries(${PROJECT_NAME} common lexer parser ast)
+add_executable(abruhp src/main.cpp)
+target_link_libraries(abruhp common lexer parser ast)

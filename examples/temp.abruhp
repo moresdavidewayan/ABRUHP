@@ -1,9 +1,0 @@
-type report name "z_something"
-
-#comment
-
-main():
-	byte prova
-	print("hello world")
-	skip()
-	uline()
