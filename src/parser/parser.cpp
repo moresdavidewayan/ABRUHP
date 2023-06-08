@@ -212,7 +212,7 @@ std::unique_ptr<StatementNode> Parser::handleStatement() {
   case TokenType::TOKEN_IDENTIFIER:
     statement = std::move(handleFunctionDefinitionStatement());
     break;
-  case TokenType::TOKEN_LINE:
+  case TokenType::TOKEN_ULINE:
     statement = std::move(handleLineStatement());
     break;
   case TokenType::TOKEN_PRINT:

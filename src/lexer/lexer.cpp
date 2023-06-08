@@ -7,6 +7,7 @@
 
 namespace ABRUHP {
 std::unordered_map<std::string, TokenType> keywords = {
+    {"byte", TokenType::TOKEN_BYTE_TYPE},
     {"type", TokenType::TOKEN_PROGRAM_TYPE},
     {"report", TokenType::TOKEN_REPORT},
     {"name", TokenType::TOKEN_NAME},
