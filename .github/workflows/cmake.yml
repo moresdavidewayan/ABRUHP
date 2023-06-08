@@ -23,7 +23,7 @@ jobs:
       - name: Setup dependencies
         run: |
           sudo apt update
-          supo apt install gcc-13 g++-13
+          sudo apt install gcc-13 g++-13
         shell: bash
 
       - name: Configure CMake
