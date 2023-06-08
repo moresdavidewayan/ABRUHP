@@ -1,4 +1,8 @@
-# ABRUHP
+<h1 align="center">ABRUHP</h1>
+
+<div align="center">
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/moresdavidewayan/ABRUHP/cmake.yml?style=for-the-badge">
+</div>
 A programming language and a source-to-source compiler aimed at fixing ABAP's horrible syntax.
 
 ## Install from source
