@@ -2,6 +2,9 @@
 
 <div align="center">
 <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/moresdavidewayan/ABRUHP/cmake.yml?style=for-the-badge">
+<img alt="GitHub" src="https://img.shields.io/github/license/moresdavidewayan/ABRUHP?style=for-the-badge">
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/moresdavidewayan/ABRUHP?style=for-the-badge">
+<img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/moresdavidewayan/ABRUHP?style=for-the-badge">
 </div>
 A programming language and a source-to-source compiler aimed at fixing ABAP's horrible syntax.
 
