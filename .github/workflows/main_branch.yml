@@ -1,4 +1,4 @@
-name: CMake
+name: Change main branch
 
 on:
   push:
