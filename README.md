@@ -1,7 +1,7 @@
 <h1 align="center">ABRUHP</h1>
 
 <div align="center">
-<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/moresdavidewayan/ABRUHP/cmake.yml?style=for-the-badge">
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/moresdavidewayan/ABRUHP/main_branch.yml?style=for-the-badge">
 <img alt="GitHub" src="https://img.shields.io/github/license/moresdavidewayan/ABRUHP?style=for-the-badge">
 <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/moresdavidewayan/ABRUHP?style=for-the-badge">
 </div>
