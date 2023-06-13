@@ -209,6 +209,9 @@ std::unique_ptr<StatementNode> Parser::handleStatement() {
 
   Token next = getCurrent();
   switch (next.getType()) {
+  case TokenType::TOKEN_DATA_TYPE:
+    statement = std::move(handleVariableDeclarationStatement());
+    break;
   case TokenType::TOKEN_IDENTIFIER:
     statement = std::move(handleFunctionDefinitionStatement());
     break;
@@ -226,6 +229,23 @@ std::unique_ptr<StatementNode> Parser::handleStatement() {
   }
 
   return statement;
+}
+
+std::unique_ptr<VariableDeclarationStatementNode>
+Parser::handleVariableDeclarationStatement() {
+  Token type = getCurrent();
+  Token name = advance();
+
+  if (name != TokenType::TOKEN_IDENTIFIER)
+    unexpected_token("identifier", getCurrent());
+
+  if (advance() != TokenType::TOKEN_NEW_LINE)
+    unexpected_token("new line", getCurrent());
+
+  advance();
+
+  return std::make_unique<VariableDeclarationStatementNode>(getCurrent(),
+                                                            advance());
 }
 
 Parser::Parser(std::vector<Token> tokens) : tokens(tokens) {

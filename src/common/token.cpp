@@ -18,8 +18,8 @@ std::string Token::toString() {
   switch (type) {
   case TokenType::TOKEN_PROGRAM_TYPE:
     return "[PROGRAM]";
-  case TokenType::TOKEN_BYTE_TYPE:
-    return "[BYTE]";
+  case TokenType::TOKEN_DATA_TYPE:
+    return std::format("[TYPE: {}]", value);
   case TokenType::TOKEN_NEW_LINE:
     return "[NEW LINE]";
   case TokenType::TOKEN_INDENTATION:

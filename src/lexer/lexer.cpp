@@ -7,13 +7,15 @@
 
 namespace ABRUHP {
 std::unordered_map<std::string, TokenType> keywords = {
-    {"byte", TokenType::TOKEN_BYTE_TYPE},
     {"type", TokenType::TOKEN_PROGRAM_TYPE},
     {"report", TokenType::TOKEN_REPORT},
     {"name", TokenType::TOKEN_NAME},
     {"print", TokenType::TOKEN_PRINT},
     {"skip", TokenType::TOKEN_SKIP},
     {"uline", TokenType::TOKEN_ULINE}};
+
+std::vector<std::string> types = {"byte",  "text_field", "int",
+                                  "float", "packed",     "string"};
 
 void Lexer::addToken(TokenType type) { tokens.push_back(Token(type, line)); }
 
@@ -84,10 +86,17 @@ void Lexer::handleComment() {
 void Lexer::handleIdentifier() {
   std::string identifier;
   identifier.push_back(getCurrent());
+
   while (isAlphaNumeric(peek()))
     identifier.push_back(advance());
+
   if (keywords.contains(identifier))
     return addToken(keywords.at(identifier));
+
+  for (auto type : types)
+    if (type == identifier)
+      return addToken(TokenType::TOKEN_DATA_TYPE, identifier);
+
   return addToken(TokenType::TOKEN_IDENTIFIER, identifier);
 }
 

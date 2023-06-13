@@ -3,8 +3,8 @@
 #include "statement_node.hpp"
 
 namespace ABRUHP {
-class VariableDeclarationStatementNode : StatementNode {
-  TokenType type;
+class VariableDeclarationStatementNode : public StatementNode {
+  std::string type;
   std::string name;
 
 public:

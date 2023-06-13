@@ -9,9 +9,16 @@ void usage();
 int main(int argc, char *argv[]) {
   std::string source;
 
-  if (argc != 2) usage();
+  std::string path;
 
-  source = readFile(argv[1]);
+  if (argc == 1) {
+    std::cout << "Path: ";
+    std::cin >> path;
+  }
+  else if (argc != 2) usage();
+  else path = argv[1];
+
+  source = readFile(path);
 
   ABRUHP::Lexer lexer(source);
   std::vector<ABRUHP::Token> tokens = lexer.getTokens();

@@ -9,7 +9,7 @@ enum class TokenType {
   TOKEN_PROGRAM_TYPE,
 
   // Basic types
-  TOKEN_BYTE_TYPE,
+  TOKEN_DATA_TYPE,
 
   // Format tokens
   TOKEN_NEW_LINE,

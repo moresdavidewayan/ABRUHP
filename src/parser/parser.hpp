@@ -24,6 +24,7 @@ class Parser {
   std::unique_ptr<ProgramDeclarationNode> handleProgramDeclaration();
   std::unique_ptr<SkipStatementNode> handleSkipStatement();
   std::unique_ptr<StatementNode> handleStatement();
+  std::unique_ptr<VariableDeclarationStatementNode> handleVariableDeclarationStatement();
 
 public:
   Parser(std::vector<Token> tokens);
