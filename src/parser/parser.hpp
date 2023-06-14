@@ -25,6 +25,8 @@ class Parser {
   std::unique_ptr<SkipStatementNode> handleSkipStatement();
   std::unique_ptr<StatementNode> handleStatement();
   std::unique_ptr<VariableDeclarationStatementNode> handleVariableDeclarationStatement();
+  void unexpected_token(std::string expected);
+  void unexpected_token(std::string expected, Token tk);
 
 public:
   Parser(std::vector<Token> tokens);
