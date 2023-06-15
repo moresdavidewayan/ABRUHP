@@ -11,7 +11,11 @@ project(
     LANGUAGES CXX
 )
 
-add_subdirectory(src)
+include(CTest)
 
-add_executable(abruhp src/main.cpp)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src)
+
+add_executable(abruhp ${CMAKE_SOURCE_DIR}/src/main.cpp)
 target_link_libraries(abruhp common lexer parser ast)
+
+add_test(NAME SimpleTest COMMAND abruhp ${CMAKE_SOURCE_DIR}/examples/test.abruhp)
