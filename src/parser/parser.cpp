@@ -203,10 +203,10 @@ std::unique_ptr<StatementNode> Parser::handleStatement() {
   std::unique_ptr<StatementNode> statement = nullptr;
 
   Token next = getCurrent();
+  if (next.getType() == TokenType::TOKEN_IDENTIFIER &&
+      types.contains(next.getValue()))
+    return std::move(handleVariableDeclarationStatement());
   switch (next.getType()) {
-  case TokenType::TOKEN_DATA_TYPE:
-    statement = std::move(handleVariableDeclarationStatement());
-    break;
   case TokenType::TOKEN_IDENTIFIER:
     statement = std::move(handleFunctionDefinitionStatement());
     break;
@@ -239,8 +239,7 @@ Parser::handleVariableDeclarationStatement() {
 
   advance();
 
-  return std::make_unique<VariableDeclarationStatementNode>(type,
-                                                            name);
+  return std::make_unique<VariableDeclarationStatementNode>(type, types.at(type.getValue()), name);
 }
 
 void Parser::unexpected_token(std::string expected) {

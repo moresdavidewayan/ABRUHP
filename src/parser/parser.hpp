@@ -10,6 +10,10 @@ class Parser {
   std::vector<Token> tokens;
   std::unique_ptr<ProgramNode> program;
   size_t current = 0, indentation_level = 0;
+  std::unordered_map<std::string, std::string> types = {
+      {"byte", "X"},  {"text_field", "C"}, {"int", "I"},
+      {"float", "F"}, {"packed", "P"},     {"string", "STRING"}};
+  
 
   Token advance();
   bool atEnd();
