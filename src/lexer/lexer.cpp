@@ -6,8 +6,7 @@
 #include "../common/log.hpp"
 
 namespace ABRUHP {
-std::unordered_map<std::string, TokenType> keywords = {
-    {"byte", TokenType::TOKEN_BYTE_TYPE},
+std::unordered_map<std::string, TokenType> keywords {
     {"type", TokenType::TOKEN_PROGRAM_TYPE},
     {"report", TokenType::TOKEN_REPORT},
     {"name", TokenType::TOKEN_NAME},
@@ -84,10 +83,13 @@ void Lexer::handleComment() {
 void Lexer::handleIdentifier() {
   std::string identifier;
   identifier.push_back(getCurrent());
+
   while (isAlphaNumeric(peek()))
     identifier.push_back(advance());
+
   if (keywords.contains(identifier))
     return addToken(keywords.at(identifier));
+
   return addToken(TokenType::TOKEN_IDENTIFIER, identifier);
 }
 

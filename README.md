@@ -47,10 +47,11 @@ make
 - [x] PRINT statement
 - [x] SKIP statement
 - [x] LINE statement
-- [ ] variable declaration
+- [x] variable declaration
+- [x] global variables
+- [ ] assignment
 - [ ] line comments
 - [ ] inline comments
-- [ ] global variables
 - [ ] forms
 - [ ] functions
 - [ ] type inference
@@ -60,9 +61,11 @@ make
 - [ ] ...
 
 ### Data types
-- [ ] byte field
-- [ ] text field
-- [ ] integer
-- [ ] floating point
-- [ ] packed number
-- [ ] text string
+- [x] byte field
+- [x] text field
+- [x] integer
+- [x] floating point
+- [x] packed number
+- [x] text string
+- [ ] other standard data types
+- [ ] runtime defined data types
