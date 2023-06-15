@@ -239,8 +239,8 @@ Parser::handleVariableDeclarationStatement() {
 
   advance();
 
-  return std::make_unique<VariableDeclarationStatementNode>(getCurrent(),
-                                                            advance());
+  return std::make_unique<VariableDeclarationStatementNode>(type,
+                                                            name);
 }
 
 void Parser::unexpected_token(std::string expected) {
