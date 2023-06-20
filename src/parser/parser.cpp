@@ -37,10 +37,7 @@ std::unique_ptr<AssignmentStatementNode> Parser::handleAssignmentStatement() {
   if (value != TokenType::TOKEN_INTEGER)
     unexpected_token("value");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-
-  advance();
+  consumeNewLine();
 
   return std::make_unique<AssignmentStatementNode>(variableName, value);
 }
@@ -85,9 +82,7 @@ Parser::handleFunctionDefinitionStatement() {
   if (advance() != TokenType::TOKEN_COLON)
     unexpected_token(":");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-  advance();
+  consumeNewLine();
 
   return std::make_unique<FunctionDefinitionStatementNode>(
       name, std::move(handleBlock()));
@@ -117,10 +112,7 @@ std::unique_ptr<LineStatementNode> Parser::handleLineStatement() {
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-
-  advance();
+  consumeNewLine();
 
   return std::make_unique<LineStatementNode>(lines);
 }
@@ -137,10 +129,7 @@ std::unique_ptr<PrintStatementNode> Parser::handlePrintStatement() {
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-
-  advance();
+  consumeNewLine();
 
   return std::make_unique<PrintStatementNode>(message);
 }
@@ -217,10 +206,7 @@ std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-
-  advance();
+  consumeNewLine();
 
   return std::make_unique<SkipStatementNode>(lines);
 }
@@ -260,10 +246,7 @@ Parser::handleVariableDeclarationStatement() {
   if (name != TokenType::TOKEN_IDENTIFIER)
     unexpected_token("identifier");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-
-  advance();
+  consumeNewLine();
 
   return std::make_unique<VariableDeclarationStatementNode>(
       type, types.at(type.getValue()), name);
