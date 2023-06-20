@@ -19,6 +19,32 @@ Token Parser::peek() {
   return tokens.at(current + 1);
 }
 
+void Parser::consumeNewLine() {
+  if (advance() != TokenType::TOKEN_NEW_LINE)
+    unexpected_token("new line");
+
+  advance();
+}
+
+std::unique_ptr<AssignmentStatementNode> Parser::handleAssignmentStatement() {
+  Token variableName = getCurrent();
+
+  if (advance() != TokenType::TOKEN_ASSIGN)
+    unexpected_token("=");
+
+  Token value = advance();
+
+  if (value != TokenType::TOKEN_INTEGER)
+    unexpected_token("value");
+
+  if (advance() != TokenType::TOKEN_NEW_LINE)
+    unexpected_token("new line");
+
+  advance();
+
+  return std::make_unique<AssignmentStatementNode>(variableName, value);
+}
+
 std::unique_ptr<BlockNode> Parser::handleBlock() {
   indentation_level += 1;
 
@@ -239,7 +265,8 @@ Parser::handleVariableDeclarationStatement() {
 
   advance();
 
-  return std::make_unique<VariableDeclarationStatementNode>(type, types.at(type.getValue()), name);
+  return std::make_unique<VariableDeclarationStatementNode>(
+      type, types.at(type.getValue()), name);
 }
 
 void Parser::unexpected_token(std::string expected) {
