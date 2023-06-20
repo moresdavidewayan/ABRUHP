@@ -1,3 +1,4 @@
+#include "assignment_statement_node.hpp"
 #include "ast_node.hpp"
 #include "block_node.hpp"
 #include "function_definition_statement_node.hpp"
