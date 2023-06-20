@@ -28,7 +28,7 @@ enum class TokenType {
   TOKEN_COLON,
 
   // =
-  TOKEN_ASSIGN
+  TOKEN_ASSIGN,
 
   // Identifier
   TOKEN_IDENTIFIER,
