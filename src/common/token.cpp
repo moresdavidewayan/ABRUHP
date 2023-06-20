@@ -36,6 +36,8 @@ std::string Token::toString() {
     return "[RIGHT PARENTHESIS]";
   case TokenType::TOKEN_COLON:
     return "[COLON]";
+  case TokenType::TOKEN_ASSIGN:
+    return "[ASSIGN]";
   case TokenType::TOKEN_IDENTIFIER:
     return std::format("[IDENTIFIER: {}]", value);
   case TokenType::TOKEN_PRINT:

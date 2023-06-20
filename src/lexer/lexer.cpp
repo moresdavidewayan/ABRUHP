@@ -6,7 +6,7 @@
 #include "../common/log.hpp"
 
 namespace ABRUHP {
-std::unordered_map<std::string, TokenType> keywords {
+std::unordered_map<std::string, TokenType> keywords{
     {"type", TokenType::TOKEN_PROGRAM_TYPE},
     {"report", TokenType::TOKEN_REPORT},
     {"name", TokenType::TOKEN_NAME},
@@ -47,6 +47,9 @@ void Lexer::analyze() {
       break;
     case ':':
       addToken(TokenType::TOKEN_COLON);
+      break;
+    case '=':
+      addToken(TokenType::TOKEN_ASSIGN);
       break;
     case '#':
       handleComment();
