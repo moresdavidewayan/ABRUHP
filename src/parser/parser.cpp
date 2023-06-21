@@ -220,7 +220,10 @@ std::unique_ptr<StatementNode> Parser::handleStatement() {
     return std::move(handleVariableDeclarationStatement());
   switch (next.getType()) {
   case TokenType::TOKEN_IDENTIFIER:
-    statement = std::move(handleFunctionDefinitionStatement());
+    if (peek() == TokenType::TOKEN_ASSIGN)
+      statement = std::move(handleAssignmentStatement());
+    else
+      statement = std::move(handleFunctionDefinitionStatement());
     break;
   case TokenType::TOKEN_ULINE:
     statement = std::move(handleLineStatement());

@@ -4,6 +4,7 @@ type report name "z_something"
 
 main():
 	byte prova
+	prova = 5
 	print("hello world")
 	skip()
 	uline()

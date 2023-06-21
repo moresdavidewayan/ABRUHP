@@ -1,9 +1,9 @@
 #pragma once
 
-#include "ast_node.hpp"
+#include "statement_node.hpp"
 
 namespace ABRUHP{
-    class AssignmentStatementNode : public ASTNode{
+    class AssignmentStatementNode : public StatementNode{
         std::string variable_name;
         Token value;
 
