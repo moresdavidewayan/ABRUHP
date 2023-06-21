@@ -48,6 +48,9 @@ void Lexer::analyze() {
     case ':':
       addToken(TokenType::TOKEN_COLON);
       break;
+    case '=':
+      addToken(TokenType::TOKEN_ASSIGN);
+      break;
     case '#':
       handleComment();
       break;

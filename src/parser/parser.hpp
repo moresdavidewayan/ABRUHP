@@ -19,6 +19,8 @@ class Parser {
   bool atEnd();
   Token getCurrent();
   Token peek();
+  void consumeNewLine();
+  std::unique_ptr<AssignmentStatementNode> handleAssignmentStatement();
   std::unique_ptr<BlockNode> handleBlock();
   std::unique_ptr<FunctionDefinitionStatementNode> handleFunctionDefinitionStatement();
   std::unique_ptr<InstructionNode> handleInstruction();

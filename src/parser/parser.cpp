@@ -19,6 +19,29 @@ Token Parser::peek() {
   return tokens.at(current + 1);
 }
 
+void Parser::consumeNewLine() {
+  if (advance() != TokenType::TOKEN_NEW_LINE)
+    unexpected_token("new line");
+
+  advance();
+}
+
+std::unique_ptr<AssignmentStatementNode> Parser::handleAssignmentStatement() {
+  Token variableName = getCurrent();
+
+  if (advance() != TokenType::TOKEN_ASSIGN)
+    unexpected_token("=");
+
+  Token value = advance();
+
+  if (value != TokenType::TOKEN_INTEGER)
+    unexpected_token("value");
+
+  consumeNewLine();
+
+  return std::make_unique<AssignmentStatementNode>(variableName, value);
+}
+
 std::unique_ptr<BlockNode> Parser::handleBlock() {
   indentation_level += 1;
 
@@ -59,9 +82,7 @@ Parser::handleFunctionDefinitionStatement() {
   if (advance() != TokenType::TOKEN_COLON)
     unexpected_token(":");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-  advance();
+  consumeNewLine();
 
   return std::make_unique<FunctionDefinitionStatementNode>(
       name, std::move(handleBlock()));
@@ -91,10 +112,7 @@ std::unique_ptr<LineStatementNode> Parser::handleLineStatement() {
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-
-  advance();
+  consumeNewLine();
 
   return std::make_unique<LineStatementNode>(lines);
 }
@@ -111,11 +129,8 @@ std::unique_ptr<PrintStatementNode> Parser::handlePrintStatement() {
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-
-  advance();
-
+  consumeNewLine();
+  
   return std::make_unique<PrintStatementNode>(message);
 }
 
@@ -191,10 +206,7 @@ std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
   if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
     unexpected_token(")");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
-
-  advance();
+  consumeNewLine();
 
   return std::make_unique<SkipStatementNode>(lines);
 }
@@ -208,7 +220,10 @@ std::unique_ptr<StatementNode> Parser::handleStatement() {
     return std::move(handleVariableDeclarationStatement());
   switch (next.getType()) {
   case TokenType::TOKEN_IDENTIFIER:
-    statement = std::move(handleFunctionDefinitionStatement());
+    if (peek() == TokenType::TOKEN_ASSIGN)
+      statement = std::move(handleAssignmentStatement());
+    else
+      statement = std::move(handleFunctionDefinitionStatement());
     break;
   case TokenType::TOKEN_ULINE:
     statement = std::move(handleLineStatement());
@@ -234,12 +249,10 @@ Parser::handleVariableDeclarationStatement() {
   if (name != TokenType::TOKEN_IDENTIFIER)
     unexpected_token("identifier");
 
-  if (advance() != TokenType::TOKEN_NEW_LINE)
-    unexpected_token("new line");
+  consumeNewLine();
 
-  advance();
-
-  return std::make_unique<VariableDeclarationStatementNode>(type, types.at(type.getValue()), name);
+  return std::make_unique<VariableDeclarationStatementNode>(
+      type, types.at(type.getValue()), name);
 }
 
 void Parser::unexpected_token(std::string expected) {
