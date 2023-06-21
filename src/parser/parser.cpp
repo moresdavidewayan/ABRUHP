@@ -130,7 +130,7 @@ std::unique_ptr<PrintStatementNode> Parser::handlePrintStatement() {
     unexpected_token(")");
 
   consumeNewLine();
-
+  
   return std::make_unique<PrintStatementNode>(message);
 }
 
