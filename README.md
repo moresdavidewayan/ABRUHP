@@ -41,6 +41,7 @@ make
 - [x] lexer
 - [x] parser
 - [x] code generation
+- [ ] compile-time checks
 - [ ] compile-time optimizations
 
 ### Basic ABAP functionalities
@@ -49,8 +50,8 @@ make
 - [x] LINE statement
 - [x] variable declaration
 - [x] global variables
-- [ ] assignment
-- [ ] line comments
+- [x] assignment
+- [ ] line comments*
 - [ ] inline comments
 - [ ] forms
 - [ ] functions
@@ -69,3 +70,5 @@ make
 - [x] text string
 - [ ] other standard data types
 - [ ] runtime defined data types
+
+> * partial support, undefined behaviour

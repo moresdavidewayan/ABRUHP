@@ -7,13 +7,19 @@
 
 namespace ABRUHP {
 class Parser {
+  typedef std::string variable_name;
+  typedef std::string variable_type;
+  typedef std::string scope;
+  typedef std::unordered_map<variable_name, variable_type> variable_info;
+
   std::vector<Token> tokens;
   std::unique_ptr<ProgramNode> program;
   size_t current = 0, indentation_level = 0;
-  std::unordered_map<std::string, std::string> types = {
+  std::unordered_map<variable_type, std::string> types = {
       {"byte", "X"},  {"text_field", "C"}, {"int", "I"},
       {"float", "F"}, {"packed", "P"},     {"string", "STRING"}};
-  
+
+  std::unordered_map<scope, variable_info> variables;
 
   Token advance();
   bool atEnd();
