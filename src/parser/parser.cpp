@@ -10,13 +10,15 @@ Token Parser::advance() {
 
 bool Parser::atEnd() { return current >= tokens.size() - 1; }
 
-Token Parser::getCurrent() { return tokens.at(current); }
+void Parser::check(Token value, TokenType expected, std::string message) {
+  if (value != expected)
+    unexpected_token(message);
+}
 
-Token Parser::peek() {
-  if (current >= tokens.size() - 1)
-    logError("EOF");
-
-  return tokens.at(current + 1);
+void Parser::check(Token value, TokenType expected, std::string message,
+                   Token tk) {
+  if (value != expected)
+    unexpected_token(message, tk);
 }
 
 void Parser::consumeNewLine() {
@@ -26,17 +28,16 @@ void Parser::consumeNewLine() {
   advance();
 }
 
+Token Parser::getCurrent() { return tokens.at(current); }
+
 std::unique_ptr<AssignmentStatementNode> Parser::handleAssignmentStatement() {
   Token variableName = getCurrent();
 
-  if (advance() != TokenType::TOKEN_ASSIGN)
-    unexpected_token("=");
+  check(advance(), TokenType::TOKEN_ASSIGN, "=");
 
   Token value = advance();
 
-  if (value != TokenType::TOKEN_INTEGER)
-    unexpected_token("value");
-
+  check(value, TokenType::TOKEN_INTEGER, "value");
   consumeNewLine();
 
   return std::make_unique<AssignmentStatementNode>(variableName, value);
@@ -72,20 +73,21 @@ std::unique_ptr<BlockNode> Parser::handleBlock() {
 std::unique_ptr<FunctionDefinitionStatementNode>
 Parser::handleFunctionDefinitionStatement() {
   Token name = getCurrent();
+  std::unique_ptr<FunctionDefinitionStatementNode> return_value;
 
-  if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS)
-    unexpected_token("(");
-
-  if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
-    unexpected_token(")");
-
-  if (advance() != TokenType::TOKEN_COLON)
-    unexpected_token(":");
-
+  check(advance(), TokenType::TOKEN_LEFT_PARENTHESIS, "(");
+  check(advance(), TokenType::TOKEN_RIGHT_PARENTHESIS, ")");
+  check(advance(), TokenType::TOKEN_COLON, ":");
   consumeNewLine();
 
-  return std::make_unique<FunctionDefinitionStatementNode>(
+  scope_level.push_back(name.getValue());
+
+  return_value = std::make_unique<FunctionDefinitionStatementNode>(
       name, std::move(handleBlock()));
+
+  scope_level.pop_back();
+
+  return return_value;
 }
 
 std::unique_ptr<InstructionNode> Parser::handleInstruction() {
@@ -93,44 +95,32 @@ std::unique_ptr<InstructionNode> Parser::handleInstruction() {
 }
 
 std::unique_ptr<LineStatementNode> Parser::handleLineStatement() {
-  if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS)
-    unexpected_token("(");
+  check(advance(), TokenType::TOKEN_LEFT_PARENTHESIS, "(");
 
   Token lines = advance();
 
   if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS) {
-    if (advance() != TokenType::TOKEN_NEW_LINE)
-      unexpected_token("new line");
-
+    check(advance(), TokenType::TOKEN_NEW_LINE, "new line");
     advance();
     return std::make_unique<LineStatementNode>();
   }
 
-  if (lines != TokenType::TOKEN_INTEGER)
-    unexpected_token("integer number or )", lines);
-
-  if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
-    unexpected_token(")");
-
+  check(lines, TokenType::TOKEN_INTEGER, "integer number or )", lines);
+  check(advance(), TokenType::TOKEN_RIGHT_PARENTHESIS, ")");
   consumeNewLine();
 
   return std::make_unique<LineStatementNode>(lines);
 }
 
 std::unique_ptr<PrintStatementNode> Parser::handlePrintStatement() {
-  if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS)
-    unexpected_token("(");
+  check(advance(), TokenType::TOKEN_LEFT_PARENTHESIS, "(");
 
   Token message = advance();
 
-  if (message != TokenType::TOKEN_STRING)
-    unexpected_token("\"", message);
-
-  if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
-    unexpected_token(")");
-
+  check(message, TokenType::TOKEN_STRING, "\"", message);
+  check(advance(), TokenType::TOKEN_RIGHT_PARENTHESIS, ")");
   consumeNewLine();
-  
+
   return std::make_unique<PrintStatementNode>(message);
 }
 
@@ -146,8 +136,7 @@ std::unique_ptr<ProgramNode> Parser::handleProgram() {
   if (atEnd())
     unexpected_token("program declaration");
 
-  if (getCurrent() != TokenType::TOKEN_PROGRAM_TYPE)
-    unexpected_token("program declaration");
+  check(getCurrent(), TokenType::TOKEN_PROGRAM_TYPE, "program declaration");
 
   declaration = handleProgramDeclaration();
 
@@ -167,16 +156,12 @@ std::unique_ptr<ProgramNode> Parser::handleProgram() {
 std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
   Token programType = advance();
 
-  if (programType != TokenType::TOKEN_REPORT)
-    unexpected_token("report", programType);
-
-  if (advance() != TokenType::TOKEN_NAME)
-    unexpected_token("name");
+  check(programType, TokenType::TOKEN_REPORT, "report", programType);
+  check(advance(), TokenType::TOKEN_NAME, "name");
 
   Token name = advance();
 
-  if (name != TokenType::TOKEN_STRING)
-    unexpected_token("string");
+  check(name, TokenType::TOKEN_STRING, "string");
 
   if (advance() != TokenType::TOKEN_NEW_LINE &&
       getCurrent() != TokenType::TOKEN_EOF)
@@ -186,26 +171,20 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
 }
 
 std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
-  if (advance() != TokenType::TOKEN_LEFT_PARENTHESIS)
-    unexpected_token("(");
+  check(advance(), TokenType::TOKEN_LEFT_PARENTHESIS, "(");
 
   Token lines = advance();
 
   if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS) {
-    if (advance() != TokenType::TOKEN_NEW_LINE)
-      unexpected_token("new line");
+    check(advance(), TokenType::TOKEN_NEW_LINE, "new line");
 
     advance();
 
     return std::make_unique<SkipStatementNode>();
   }
 
-  if (lines != TokenType::TOKEN_INTEGER)
-    unexpected_token("integer number or )", lines);
-
-  if (advance() != TokenType::TOKEN_RIGHT_PARENTHESIS)
-    unexpected_token(")");
-
+  check(lines, TokenType::TOKEN_INTEGER, "integer number or )", lines);
+  check(advance(), TokenType::TOKEN_LEFT_PARENTHESIS, ")");
   consumeNewLine();
 
   return std::make_unique<SkipStatementNode>(lines);
@@ -246,13 +225,25 @@ Parser::handleVariableDeclarationStatement() {
   Token type = getCurrent();
   Token name = advance();
 
-  if (name != TokenType::TOKEN_IDENTIFIER)
-    unexpected_token("identifier");
+  check(name, TokenType::TOKEN_IDENTIFIER, "identifier");
 
   consumeNewLine();
 
+  std::string current_scope = scope_level.at(scope_level.size() - 1);
+
+  if (!variables.contains(current_scope))
+  variables.at(current_scope) = std::vector<variable_info>();
+  variables[current_scope].push_back({name.getValue(), type.getValue()});
+
   return std::make_unique<VariableDeclarationStatementNode>(
       type, types.at(type.getValue()), name);
+}
+
+Token Parser::peek() {
+  if (current >= tokens.size() - 1)
+    logError("EOF");
+
+  return tokens.at(current + 1);
 }
 
 void Parser::unexpected_token(std::string expected) {
