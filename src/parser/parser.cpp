@@ -233,7 +233,7 @@ Parser::handleVariableDeclarationStatement() {
 
   if (!variables.contains(current_scope))
   variables.at(current_scope) = std::vector<variable_info>();
-  variables[current_scope].push_back({name.getValue(), type.getValue()});
+  variables[current_scope].push_back({{name.getValue(), type.getValue()}});
 
   return std::make_unique<VariableDeclarationStatementNode>(
       type, types.at(type.getValue()), name);
