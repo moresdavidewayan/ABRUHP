@@ -2,6 +2,7 @@
 
 #include <cctype>
 #include <format>
+#include <iostream>
 
 #include "../common/log.hpp"
 
@@ -33,8 +34,8 @@ void Lexer::analyze() {
       handleString();
       break;
     case '\n':
-      line += 1;
       addToken(TokenType::TOKEN_NEW_LINE);
+      line += 1;
       break;
     case '\t':
       addToken(TokenType::TOKEN_INDENTATION);
@@ -56,6 +57,7 @@ void Lexer::analyze() {
       break;
     case ' ':
     case '\r':
+    case '\0':
       break;
     default:
       if (isAlpha(c))
@@ -78,8 +80,8 @@ void Lexer::handleComment() {
   std::string comment;
   while (peek() != '\n')
     comment.push_back(advance());
-  line += 1;
-  advance();
+  // line += 1;
+  // advance();
   addToken(TokenType::TOKEN_COMMENT, comment);
 }
 
@@ -121,8 +123,10 @@ bool Lexer::isAlphaNumeric(char control) {
 bool Lexer::isNumeric(char control) { return isdigit(control); }
 
 char Lexer::peek() {
-  if (current >= source.length() - 1)
-    logError("EOF");
+  if (atEnd()){
+    // logError("EOF");
+    return '\0';
+  }
   return source.at(current + 1);
 }
 
