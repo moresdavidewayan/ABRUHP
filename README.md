@@ -41,7 +41,7 @@ make
 - [x] lexer
 - [x] parser
 - [x] code generation
-- [ ] compile-time checks
+- [x] compile-time checks
 - [ ] compile-time optimizations
 
 ### Basic ABAP functionalities
@@ -50,6 +50,7 @@ make
 - [x] LINE statement
 - [x] variable declaration
 - [x] global variables
+- [ ] local variables
 - [x] assignment
 - [ ] line comments*
 - [ ] inline comments

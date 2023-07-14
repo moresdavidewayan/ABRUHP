@@ -1,0 +1,18 @@
+# Every report must start with these lines:
+# Every comment starts with  "#"
+type report name "z_example01" # btw comments can be inline too
+
+
+# The "main" function is the starting point for the execution of your program
+void main():
+
+	# The "print(message: string)" function prints a string on screen
+	print("Hello world!")
+
+	# The "skip(n: optional<int>)" positions the list cursor relative to the current line
+	skip(3) # This positions the cursor 3 lines down the current line
+	skip()  # n is optional, defaults to 1
+	
+	# The "uline(n: optional<int>)" inserts a horizontal line across the output
+	uline(3) # This inserts three horizontal lines
+	uline() # n is optional, defaults to 1
