@@ -22,7 +22,8 @@ void Parser::check(Token value, TokenType expected, std::string message,
 }
 
 void Parser::consumeNewLine() {
-  if (advance() != TokenType::TOKEN_NEW_LINE)
+  if (advance() != TokenType::TOKEN_NEW_LINE &&
+      getCurrent() != TokenType::TOKEN_COMMENT)
     unexpected_token("new line");
 
   advance();
@@ -56,9 +57,12 @@ std::unique_ptr<BlockNode> Parser::handleBlock() {
       advance();
     }
 
-    if (peek() == TokenType::TOKEN_NEW_LINE ||
-        peek() == TokenType::TOKEN_COMMENT)
+    if (getCurrent() == TokenType::TOKEN_NEW_LINE || 
+        getCurrent() == TokenType::TOKEN_COMMENT)
+    {
+      advance();  
       continue;
+    }
 
     if (count_indentations < indentation_level)
       break;
@@ -72,7 +76,8 @@ std::unique_ptr<BlockNode> Parser::handleBlock() {
 
 std::unique_ptr<FunctionDefinitionStatementNode>
 Parser::handleFunctionDefinitionStatement() {
-  Token name = getCurrent();
+  Token return_type = getCurrent();
+  Token name = advance();
   std::unique_ptr<FunctionDefinitionStatementNode> return_value;
 
   check(advance(), TokenType::TOKEN_LEFT_PARENTHESIS, "(");
@@ -100,7 +105,11 @@ std::unique_ptr<LineStatementNode> Parser::handleLineStatement() {
   Token lines = advance();
 
   if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS) {
-    check(advance(), TokenType::TOKEN_NEW_LINE, "new line");
+    if (advance().getType() == TokenType::TOKEN_COMMENT)
+      check(advance(), TokenType::TOKEN_NEW_LINE, "new line");
+    else
+      check(getCurrent(), TokenType::TOKEN_NEW_LINE, "new line");
+    
     advance();
     return std::make_unique<LineStatementNode>();
   }
@@ -177,15 +186,18 @@ std::unique_ptr<SkipStatementNode> Parser::handleSkipStatement() {
   Token lines = advance();
 
   if (lines == TokenType::TOKEN_RIGHT_PARENTHESIS) {
-    check(advance(), TokenType::TOKEN_NEW_LINE, "new line");
-
+    if (advance().getType() == TokenType::TOKEN_COMMENT)
+      check(advance(), TokenType::TOKEN_NEW_LINE, "new line");
+    else
+      check(getCurrent(), TokenType::TOKEN_NEW_LINE, "new line");
+    
     advance();
 
     return std::make_unique<SkipStatementNode>();
   }
 
   check(lines, TokenType::TOKEN_INTEGER, "integer number or )", lines);
-  check(advance(), TokenType::TOKEN_LEFT_PARENTHESIS, ")");
+  check(advance(), TokenType::TOKEN_RIGHT_PARENTHESIS, ")");
   consumeNewLine();
 
   return std::make_unique<SkipStatementNode>(lines);
@@ -214,6 +226,8 @@ std::unique_ptr<StatementNode> Parser::handleStatement() {
   case TokenType::TOKEN_SKIP:
     statement = std::move(handleSkipStatement());
     break;
+  case TokenType::TOKEN_EOF: 
+  break;
   default:
     unexpected_token("statement", next);
   }
@@ -241,9 +255,9 @@ Parser::handleVariableDeclarationStatement() {
 }
 
 Token Parser::peek() {
-  if (current >= tokens.size() - 1)
-    logError("EOF");
-
+  if (atEnd()){
+    return tokens.at(tokens.size() - 1);
+  }
   return tokens.at(current + 1);
 }
 
