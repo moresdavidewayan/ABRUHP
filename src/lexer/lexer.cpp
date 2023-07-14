@@ -80,7 +80,6 @@ void Lexer::handleComment() {
   std::string comment;
   while (peek() != '\n')
     comment.push_back(advance());
-  // line += 1;
   // advance();
   addToken(TokenType::TOKEN_COMMENT, comment);
 }
