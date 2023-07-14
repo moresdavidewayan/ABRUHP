@@ -164,7 +164,8 @@ std::unique_ptr<ProgramDeclarationNode> Parser::handleProgramDeclaration() {
   check(name, TokenType::TOKEN_STRING, "string");
 
   if (advance() != TokenType::TOKEN_NEW_LINE &&
-      getCurrent() != TokenType::TOKEN_EOF)
+      getCurrent() != TokenType::TOKEN_EOF && 
+      getCurrent() != TokenType::TOKEN_COMMENT)
     unexpected_token("new line");
 
   return std::make_unique<ProgramDeclarationNode>(programType, name);
