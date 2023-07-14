@@ -124,7 +124,6 @@ bool Lexer::isNumeric(char control) { return isdigit(control); }
 
 char Lexer::peek() {
   if (atEnd()){
-    // logError("EOF");
     return '\0';
   }
   return source.at(current + 1);
